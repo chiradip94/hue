@@ -22,6 +22,9 @@ import $ from 'jquery/jquery.common';
 import 'ext/bootstrap.2.3.2.min';
 import 'ext/bootstrap-editable.1.5.1.min';
 
+import 'react';
+import 'react-dom';
+
 import 'utils/d3Extensions';
 import * as d3 from 'd3';
 import d3v3 from 'd3v3';
@@ -77,6 +80,9 @@ import HueDocument from 'doc/hueDocument';
 import { getLastKnownConfig, refreshConfig } from 'config/hueConfig';
 import { simpleGet } from 'api/apiUtils'; // In analytics.mako, metrics.mako, threads.mako
 import Mustache from 'mustache'; // In hbase/templates/app.mako, jobsub.templates.js, search.ko.js, search.util.js
+
+// Create the react components that are react roots
+import 'reactComponentsTranspiled/createRootElements.js';
 
 // TODO: Migrate away
 window._ = _;

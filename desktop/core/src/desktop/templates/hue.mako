@@ -200,6 +200,17 @@ ${ hueIcons.symbols() }
       }"><div class="resize-bar"></div></div>
 
       <div class="page-content">
+          ## <div style="background-color: red">Am I also flickering?</div>
+          <p>
+            React component with data from Python/Mako
+            
+            <LikeButton data-reactcomponent='LikeButton' data-props='{"version" : "${hue_version()}", "isReal" : "${True}"}'></LikeButton>
+            <DislikeButton data-reactcomponent='DislikeButton' data-props='{"version" : "${hue_version()}", "isReal" : "false"}'></DislikeButton>
+            <ComplexComponent data-reactcomponent='ComplexComponent'></ComplexComponent>
+          </p>
+          
+          <LikeButton data-bind="reactWrapper: 'LikeButton', props: { children: 'React in KO button' }"></LikeButton>
+
         <!-- ko if: window.ENABLE_NOTEBOOK_2 -->
         <!-- ko component: 'session-panel' --><!-- /ko -->
         <!-- /ko -->
