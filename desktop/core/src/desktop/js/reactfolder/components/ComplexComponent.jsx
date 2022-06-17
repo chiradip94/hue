@@ -13,7 +13,7 @@ const ComplexComponent = ({ version }) => {
   };
 
   return (
-    <div style={{ backgroundColor: 'yellow' }}>
+    <div style={{ backgroundColor: 'red' }}>
       <h2>I am a complex react component</h2>
       <p>Liked button clicks: {likedCount}</p>
       <LikeButton onClick={handleLikeButtonClick} version={version}>

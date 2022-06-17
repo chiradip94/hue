@@ -2,6 +2,10 @@ import { createElement } from 'react';
 import { createRoot } from 'react-dom/client';
 import PropTypes from 'prop-types';
 
+import ComplexComponent from './components/ComplexComponent';
+import DislikeButton from './components/DislikeButton';
+import LikeButton from './components/LikeButton';
+
 const parseDatasetPropValue = ({ propName, propValue, proptypesDefinition, componentName }) => {
   const type = proptypesDefinition[propName];
   let parsedValue = propValue;
@@ -27,22 +31,47 @@ const parseDatasetPropValue = ({ propName, propValue, proptypesDefinition, compo
   return parsedValue;
 };
 
-async function render(name, rawPropDataset, root) {  
-  const { default: Component } = await import(`../reactComponentsTranspiled/components/${name}`);
-  
+const parseProps = (name, rawPropDataset, myPropTypes) => {
   const props = {};
   for (let propName in rawPropDataset) {
     const propValue = rawPropDataset[propName];
     const parsedPropValue = parseDatasetPropValue({
       propName,
       propValue,
-      proptypesDefinition: Component.propTypes,
+      proptypesDefinition: myPropTypes,
       componentName: name
     });
     props[propName] = parsedPropValue;
   }
+  return props;
+}
 
+async function render(name, rawPropDataset, root) {  
+  // The dynamic option, not sure how that works with webpack...
+
+  const { default: Component } = await import(`../reactfolder/components/${name}`);
+  const props = parseProps(name, rawPropDataset, Component.propTypes);
   root.render(createElement(Component, props));
+  
+  // static option
+  // let myPropTypes;
+  // switch (name) {
+  //   case 'LikeButton':
+  //     myPropTypes = parseProps(name, rawPropDataset, LikeButton.propTypes)
+  //     root.render(createElement(LikeButton, myPropTypes));
+  //     break;
+  //   case 'DislikeButton':
+  //     myPropTypes = parseProps(name, rawPropDataset, DislikeButton.propTypes)
+  //     root.render(createElement(DislikeButton, myPropTypes));
+  //     break;
+  //   case 'ComplexComponent':
+  //     myPropTypes = parseProps(name, rawPropDataset, ComplexComponent.propTypes)
+  //     root.render(createElement(ComplexComponent, myPropTypes));
+  //     break;            
+  //   default:
+  //     break;
+  // }
+
 }
 
 // Find all DOM containers

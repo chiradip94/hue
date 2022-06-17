@@ -60,6 +60,7 @@
     },
     emits: ['update:model-value'],
     setup(props, { emit }) {
+      console.info('testwww3');
       const { modelValue, options } = toRefs(props);
 
       const inputText = ref('');

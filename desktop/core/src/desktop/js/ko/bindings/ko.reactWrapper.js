@@ -4,7 +4,9 @@ import React, { createElement } from 'react';
 import { createRoot } from 'react-dom/client';
 
 async function loadComponent(name, props, root) {
-  const { default: Component } = await import(`../../reactComponentsTranspiled/components/${name}`);
+  // TODO: does this really work when loading react components from an app folder?
+  
+  const { default: Component } = await import(`../../reactfolder/components/${name}`);
   return Component;
   // root.render(createElement(Component, props));
 }

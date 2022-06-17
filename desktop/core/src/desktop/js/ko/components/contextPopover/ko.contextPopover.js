@@ -303,7 +303,6 @@ const SUPPORT_TEMPLATES = `
       <!-- /ko -->
       <div><LikeButton data-bind="reactWrapper: 'LikeButton', props: { children: loading() ? 'loading': 'React in KO button' }"></LikeButton></div> 
       <LikeButton data-bind="reactWrapper: 'LikeButton', props: { children: loading() ? 'loading2': 'React in KO button2' }"></LikeButton>
-      <i class="hue-popover-title-icon fa muted" data-bind="css: catalogEntry() && (catalogEntry().isView() || parentIsView()) ? 'fa-eye' : (catalogEntry().isDatabase() ? 'fa-database' : (catalogEntry().isModel() ? 'fa-puzzle-piece' : 'fa-table'))"></i>
       <span class="hue-popover-title-text" data-bind="foreach: breadCrumbs">
         <!-- ko ifnot: isActive --><div><a href="javascript: void(0);" data-bind="click: makeActive, text: name"></a>.</div><!-- /ko -->
         <!-- ko if: isActive -->
