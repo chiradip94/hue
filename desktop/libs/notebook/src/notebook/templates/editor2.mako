@@ -986,6 +986,9 @@
 
           <div class="tab-pane" id="queryResults" data-bind="css: {'active': currentQueryTab() == 'queryResults'}">
             <div class="execution-results-tab-panel">
+              ## <LikeButton data-bind="reactWrapper: 'LikeButton', props: { children: 'My button', activeExecutable: activeExecutable }"></LikeButton>
+              <ReactResult data-bind="reactWrapper: 'ReactResult', props: { children: 'My button', activeExecutable: activeExecutable }"></ReactResult>
+
               <result-table-ko-bridge class="table-results-bridge" data-bind="vueKoProps: {
                   'executable-observable': activeExecutable
                 }"></result-table-ko-bridge>

@@ -1,31 +1,35 @@
+import { objectToString } from '@vue/shared';
 import * as ko from 'knockout';
 import React, { createElement } from 'react';
 // import {render} from 'react-dom';
 import { createRoot } from 'react-dom/client';
 
-async function loadComponent(name, props, root) {
-  // TODO: does this really work when loading react components from an app folder?
+async function loadComponent(name) {
+  // TODO: Contiue here and fix this.
+  // We need to support multiple component locations, perhaps add a path to the name?
+  // const { default: Component } = await import(`../../reactComponents/${name}`);
+  const { default: Component } = await import(`../../apps/editor/components/result/${name}`);
+
   
-  const { default: Component } = await import(`../../reactfolder/components/${name}`);
   return Component;
-  // root.render(createElement(Component, props));
+}
+
+const getProps = (allBindings) =>  {
+  const props = allBindings.get('props'); 
+
+  // Functions are not valid as a React child
+  return { ...props, children : ko.toJS(props.children) };  
 }
 
 ko.bindingHandlers.reactWrapper = (() => {
 
   return {
     init: function (el, valueAccessor, allBindings, viewModel, bindingContext) {
-
-      
       const componentName = ko.unwrap(valueAccessor());
-      const props = ko.toJS(allBindings.get('props'));
-
+      const props = getProps(allBindings);
 
       // The component's react root should only be created once per DOM
       // load so we pass it along via the bindingContext to be reused in the
-      //
-      
-      
       const reactRoot = createRoot(el);
       el.__KO_React_root = reactRoot;
       loadComponent(componentName).then(Component => {
@@ -37,20 +41,24 @@ ko.bindingHandlers.reactWrapper = (() => {
     },
 
     update: function (el, valueAccessor, allBindings, viewModel, bindingContext) {
-      // debugger;
       const componentName = ko.unwrap(valueAccessor());
-      const props = ko.toJS(allBindings.get('props'));
+      const props = getProps(allBindings);
 
-      // console.info(el);
-
-      // const { reactRoot } = bindingContext.$data;
-      // const reactRoot = createRoot(el);
       loadComponent(componentName).then(Component => {
         el.__KO_React_root.render(createElement(Component, props));
-        // render(createElement(Component, props), el);
-      });
+      });    
+
+      // Handle KO observables
+      Object.entries(props).forEach(([propName, propValue]) => {
+        if (ko.isObservable(propValue)) {
+          const koSubscription = propValue.subscribe(() => {
+            loadComponent(componentName).then(Component => {
+              el.__KO_React_root.render(createElement(Component, {...props, [propName]: propValue()}));
+            });          
+          });
+          koSubscription.disposeWhenNodeIsRemoved(el);          
+        }             
+      })
     }
   };
 })();
-
-// ko.virtualElements.allowedBindings.reactWrapper = true;

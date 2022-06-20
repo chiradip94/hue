@@ -3,24 +3,28 @@ import PropTypes from 'prop-types';
 
 ('use strict');
 
-const LikeButton = ({ version, isReal, children, onClick }) => {
+const ReactResult = ({ version, isReal, children, onClick, activeExecutable }) => {
+const id = activeExecutable && activeExecutable.id;
+
+// Hello
+
   return (
     <button
       onClick={e => {
         onClick && onClick(e);
-        console.info('LikeButton clicked');
+        console.info('ReactResult clicked');
       }}
     >
-      {children ? children : 'Like me'}
+      {children ? children : 'Like me'} {id}
     </button>
   );
 };
 
-LikeButton.propTypes = {
+ReactResult.propTypes = {
   version: PropTypes.string,
   age: PropTypes.number,
   stuff: PropTypes.object,
   isReal: PropTypes.bool
 };
 
-export default LikeButton;
+export default ReactResult;

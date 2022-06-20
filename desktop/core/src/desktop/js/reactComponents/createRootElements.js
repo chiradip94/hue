@@ -2,9 +2,9 @@ import { createElement } from 'react';
 import { createRoot } from 'react-dom/client';
 import PropTypes from 'prop-types';
 
-import ComplexComponent from './components/ComplexComponent';
-import DislikeButton from './components/DislikeButton';
-import LikeButton from './components/LikeButton';
+// import ComplexComponent from './ComplexComponent';
+// import DislikeButton from './components/DislikeButton';
+// import LikeButton from './components/LikeButton';
 
 const parseDatasetPropValue = ({ propName, propValue, proptypesDefinition, componentName }) => {
   const type = proptypesDefinition[propName];
@@ -49,7 +49,7 @@ const parseProps = (name, rawPropDataset, myPropTypes) => {
 async function render(name, rawPropDataset, root) {  
   // The dynamic option, not sure how that works with webpack...
 
-  const { default: Component } = await import(`../reactfolder/components/${name}`);
+  const { default: Component } = await import(`../reactComponents/${name}`);
   const props = parseProps(name, rawPropDataset, Component.propTypes);
   root.render(createElement(Component, props));
   

@@ -82,7 +82,7 @@ import { simpleGet } from 'api/apiUtils'; // In analytics.mako, metrics.mako, th
 import Mustache from 'mustache'; // In hbase/templates/app.mako, jobsub.templates.js, search.ko.js, search.util.js
 
 // Create the react components that are react roots
-import 'reactfolder/createRootElements.js';
+// import 'reactComponents/createRootElements.js';
 
 // TODO: Migrate away
 window._ = _;
