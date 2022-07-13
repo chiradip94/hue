@@ -1498,6 +1498,21 @@ OIDC = ConfigSection(
   key='oidc',
   help=_('Configuration options for OpenID Connect authentication'),
   members=dict(
+      
+    OIDC_AUTHENTICATION_CALLBACK_URL=Config(
+      key="oidc_authentication_callback_url",
+      help=_("The callback url for the application to generate token."),
+      type=str,
+      default="https://localhost:8080/oidc/callback"
+    ),
+      
+    OIDC_RP_SCOPES=Config(
+      key="oidc_rp_scopes",
+      help=_("The scopes for oidc."),
+      type=str,
+      default="openid read write"
+    ),
+      
     OIDC_RP_CLIENT_ID=Config(
       key="oidc_rp_client_id",
       help=_("The client ID as relay party set in OpenID provider."),
